@@ -64,7 +64,7 @@ post '/contacts' do
 		    :address              => 'smtp.gmail.com', 
 		    :port                 => '587', 
 		    :enable_starttls_auto => true, 
-		    :user_name            => 'vikavebmaster', 
+		    :user_name            => 'vikavebmaster@gmail.ru', 
 		    :password             => '123456789qaRf', 
 		    :authentication       => :plain, 
 		    :domain               => 'localhost.localdomain'
