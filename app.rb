@@ -38,18 +38,38 @@ post '/visit' do
 end
 
 post '/contacts' do
+	@name = params[:name]
 	@email = params[:email]
 	@textarea = params[:textarea]
 
 		# хеш для валидации
-	hh = { 	:email => 'Введите свой email',
+	hh = { 	:name => 'Введите свое имя',
+			:email => 'Введите email',
 			:textarea => 'Введите текст письма' }
 
 	@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
 
 	if @error != ""
-		return erb :contacts
-	end
+		require 'pony'
+		Pony.mail(
+		  :name => params[:name],
+		  :email => params[:email],
+		  :textarea => params[:textarea],
+		  :to => 'vikavebmaster@gmail.com',
+		  :subject => params[:name] + " has contacted you",
+		  :body => params[:textarea],
+		  :port => '587',
+		  :via => :smtp,
+		  :via_options => { 
+		    :address              => 'smtp.gmail.com', 
+		    :port                 => '587', 
+		    :enable_starttls_auto => true, 
+		    :user_name            => 'vikavebmaster@gmail.ru', 
+		    :password             => '123456789qaRf', 
+		    :authentication       => :plain, 
+		    :domain               => 'localhost.localdomain'
+		  })
 
-	erb "Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
+		erb "Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
+	end
 end
