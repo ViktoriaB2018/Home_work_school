@@ -4,7 +4,9 @@ require 'sinatra/reloader'
 require 'sqlite3'
 
 def get_db
-	return SQLite3::Database.new 'barbershop.db'
+	db = SQLite3::Database.new 'barbershop.db'
+	db.results_as_hash = true
+	return db
 end
 
 configure do
@@ -50,6 +52,14 @@ post '/visit' do
 	            VALUES (?, ?, ?, ?, ?)", [@username, @phone, @date_time, @select_barber, @color]
 
 	erb "Спасибо, #{@username}, #{@phone}! Вы записаны на #{@date_time} к #{@select_barber}, цвет #{@color}."
+end
+
+get '/showusers' do
+	db = get_db
+	db.execute 'SELECT * FROM Users' do |row|
+		print row['username']
+		print row['datestamp']
+	end
 end
 
 post '/contacts' do
