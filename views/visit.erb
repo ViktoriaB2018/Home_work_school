@@ -21,9 +21,9 @@
 	<div class="form-group">
 		<label for="disabledSelect">Выберите парикмахера</label>
 		<select name="select_barber" id="disabledSelect" class="form-control">
-			<option>Юдашкина Алина</option>
-			<option>Ливанов Антон</option>
-			<option>Божок Екатерина</option>
+			<option <%= @select_barber == 'Юдашкина Алина' ? 'selected' : '' %>>Юдашкина Алина</option>
+			<option <%= @select_barber == 'Ливанов Антон' ? 'selected' : '' %>>Ливанов Антон</option>
+			<option <%= @select_barber == 'Божок Екатерина' ? 'selected' : '' %>>Божок Екатерина</option>
 		</select>
 	</div>
 
