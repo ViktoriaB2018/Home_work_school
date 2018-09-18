@@ -3,6 +3,12 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
+configure do
+	@db = SQLite3::Database.new 'barbershop.db'
+	@db.execute 'CREATE TABLE IF NOT EXISTS 
+				Users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, phone TEXT, datestamp TEXT, barber TEXT, color TEXT)'
+end
+
 get '/' do
 	erb :body			
 end
@@ -34,11 +40,6 @@ post '/visit' do
 	if @error != ""
 		return erb :visit
 	end
-
-	db = SQLite3::Database.new 'barber_shop.db'
-
-	db.execute "INSERT INTO Users (Name, Phone, DateStamp, Barber, Color) VALUES ('#{@username}', '#{@phone}', '#{@date_time}', #{@select_barber}', '#{@color}');"
-	db.close
 
 	erb "Спасибо, #{@username}, #{@phone}! Вы записаны на #{@date_time} к #{@select_barber}, цвет #{@color}."
 end
