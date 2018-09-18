@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sqlite3'
 
 get '/' do
 	erb :body			
@@ -33,6 +34,11 @@ post '/visit' do
 	if @error != ""
 		return erb :visit
 	end
+
+	db = SQLite3::Database.new 'barber_shop.db'
+
+	db.execute "INSERT INTO Users (Name, Phone, DateStamp, Barber, Color) VALUES ('#{@username}', '#{@phone}', '#{@date_time}', #{@select_barber}', '#{@color}');"
+	db.close
 
 	erb "Спасибо, #{@username}, #{@phone}! Вы записаны на #{@date_time} к #{@select_barber}, цвет #{@color}."
 end
@@ -73,3 +79,6 @@ post '/contacts' do
 		erb "Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
 	end
 end
+
+
+
