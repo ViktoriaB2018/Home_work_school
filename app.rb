@@ -55,11 +55,7 @@ post '/visit' do
 end
 
 get '/showusers' do
-	db = get_db
-	db.execute 'SELECT * FROM Users' do |row|
-		print row['username']
-		print row['datestamp']
-	end
+	erb :showusers
 end
 
 post '/contacts' do
