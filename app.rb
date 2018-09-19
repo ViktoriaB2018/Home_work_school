@@ -55,6 +55,8 @@ post '/visit' do
 end
 
 get '/showusers' do
+	db = get_db
+	@results = db.execute 'SELECT * FROM Users order by id desc'
 	erb :showusers
 end
 
