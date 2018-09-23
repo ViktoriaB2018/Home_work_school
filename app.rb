@@ -95,29 +95,30 @@ post '/contacts' do
 
 	@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
 
-	if @error != ""
-		require 'pony'
-		Pony.mail(
-		  :name => params[:name],
-		  :email => params[:email],
-		  :textarea => params[:textarea],
-		  :to => 'vikavebmaster@gmail.com',
-		  :subject => params[:name] + " has contacted you",
-		  :body => params[:textarea],
-		  :port => '587',
-		  :via => :smtp,
-		  :via_options => { 
-		    :address              => 'smtp.gmail.com', 
-		    :port                 => '587', 
-		    :enable_starttls_auto => true, 
-		    :user_name            => 'vikavebmaster@gmail.ru', 
-		    :password             => '123456789qaRf', 
-		    :authentication       => :plain, 
-		    :domain               => 'localhost.localdomain'
-		  })
+	erb :contacts
 
-		erb "Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
-	end
+	#if @error != ""
+		#require 'pony'
+		#Pony.mail(
+		 # :name => params[:name],
+		 # :from => params[:email],
+		 # :to => 'vikavebmaster@gmail.com',
+		 # :subject => params[:name] + " has contacted you",
+		 # :body => params[:textarea],
+		 # :port => '587',
+		 # :via => :smtp,
+		 # :via_options => { 
+		  #  :address              => 'smtp.gmail.com', 
+		  #  :port                 => '587', 
+		   # :enable_starttls_auto => true, 
+		   # :user_name            => 'vikavebmaster@gmail.ru', 
+		   # :password             => '123456789qaRf', 
+		   # :authentication       => :plain, 
+		   # :domain               => 'localhost.localdomain'
+		 # })
+
+		#"Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
+	#end
 end
 
 
