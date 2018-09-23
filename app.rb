@@ -95,30 +95,29 @@ post '/contacts' do
 
 	@error = hh.select {|key,_| params[key] == ""}.values.join(", ")
 
-	erb :contacts
+	if @error != ''
+		erb :contacts
 
-	#if @error != ""
-		#require 'pony'
-		#Pony.mail(
-		 # :name => params[:name],
-		 # :from => params[:email],
-		 # :to => 'vikavebmaster@gmail.com',
-		 # :subject => params[:name] + " has contacted you",
-		 # :body => params[:textarea],
-		 # :port => '587',
-		 # :via => :smtp,
-		 # :via_options => { 
-		  #  :address              => 'smtp.gmail.com', 
-		  #  :port                 => '587', 
-		   # :enable_starttls_auto => true, 
-		   # :user_name            => 'vikavebmaster@gmail.ru', 
-		   # :password             => '123456789qaRf', 
-		   # :authentication       => :plain, 
-		   # :domain               => 'localhost.localdomain'
-		 # })
+	else
+		require 'pony'
+		Pony.mail(
+		# :from => params[:email],
+		  :to => 'vikavebmaster@gmail.com',
+		  :subject => params[:name] + " email: " + params[:email] + " хочет связаться с вами",
+		  :body => params[:textarea],
+		  :via => :smtp,
+		  :via_options => { 
+		    :address              => 'smtp.gmail.com', 
+		    :port                 => '587', 
+		    :enable_starttls_auto => true, 
+		    :user_name            => 'vikavebmaster', 
+		    :password             => '123456789qaRf', 
+		    :authentication       => :plain, 
+		    :domain               => 'localhost.localdomain'
+		  })
 
-		#"Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
-	#end
+		"Спасибо за обращение! Мы ответим Вам в самое ближайшее время."
+	end
 end
 
 
